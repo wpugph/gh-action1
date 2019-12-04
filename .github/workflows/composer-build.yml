@@ -14,7 +14,7 @@ jobs:
         # define settings here
         export PANTHEONEMAIL="cralberto11@gmail.com"
         export REFERENCE_SITE_URL='https://live-gh-action1.pantheonsite.io/'
-        export PANTHEONSITENAME="carltest1"
+        export PANTHEONSITENAME="gh-action1"
         export PANTHEONSITEUUID="a22f4a40-0025-4878-ae51-babe2e978c49"
         export PANTHEONENV="dev"
         export TEST_SITE_URL='https://dev-gh-action1.pantheonsite.io/'

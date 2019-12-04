@@ -7,3 +7,4 @@ curl -O https://raw.githubusercontent.com/pantheon-systems/terminus-installer/ma
 /home/runner/terminus/vendor/bin/terminus auth:login --machine-token="$MACHINETOKEN"
 /home/runner/terminus/vendor/bin/terminus auth:login --email="$PANTHEONEMAIL"
 /home/runner/terminus/vendor/bin/terminus auth:whoami
+/home/runner/terminus/vendor/bin/terminus connection:set $PANTHEONSITENAME.$PANTHEONENV sftp
