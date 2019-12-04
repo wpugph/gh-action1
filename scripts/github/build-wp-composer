@@ -1,0 +1,29 @@
+#!/bin/bash
+
+cd $PROJECT_ROOT
+composer install
+echo 'wp composer build success!!'
+
+# deploy plugins and themes
+rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./web/wp-content/. --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/wp-content/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
+
+# deploy core via rsync
+rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./web/wp/. --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/web/wp/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
+
+# install backstop
+npm install backstopjs || exit 0
+$PROJECT_ROOT/node_modules/backstopjs/cli/index.js -v
+# Backstop get reference
+echo -e "\nRunning backstop reference on ${REFERENCE_SITE_URL}..."
+$PROJECT_ROOT/node_modules/backstopjs/cli/index.js reference --config=$PROJECT_ROOT/scripts/github/test/backstopjs/backstopConfig.js
+# Backstop test url
+echo -e "\nRunning backstop test on ${TEST_SITE_URL}..."
+VISUAL_REGRESSION_RESULTS=$($PROJECT_ROOT/node_modules/backstopjs/cli/index.js test --config=$PROJECT_ROOT/scripts/github/test/backstopjs/backstopConfig.js)
+$PROJECT_ROOT/node_modules/backstopjs/cli/index.js test --config=$PROJECT_ROOT/scripts/github/test/backstopjs/backstopConfig.js
+/home/runner/terminus/vendor/bin/terminus auth:whoami
+/home/runner/terminus/vendor/bin/terminus connection:set $PANTHEONSITENAME.$PANTHEONENV sftp
+
+rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./backstop_data/. --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/backstop_data/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
+
+echo 'View backstop report here\n'
+echo $QA_SITE_URL/backstop_data/html_report
