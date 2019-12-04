@@ -20,7 +20,7 @@ ls $PROJECT_ROOT/web/wp -al
 ls $PROJECT_ROOT/web/wp/wp-content -al
 
 # deploy core via rsync + wp-config
-rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./web/wp/. --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/web/wp/ --exclude='*.git*' --exclude= node_modules/ --exclude= wp-content/ --exclude gulp/ --exclude source/
+rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./web/wp/. --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/web/wp/ --exclude='*.git*' --exclude node_modules/ --exclude wp-content/ --exclude gulp/ --exclude source/
 
 # install backstop
 # npm install backstopjs || exit 0
