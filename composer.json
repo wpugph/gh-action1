@@ -27,7 +27,8 @@
 	  "wpackagist-plugin/tika-doc-pdf-indexer": ">=1.0.4",
 	  "wpackagist-plugin/woocommerce": "3.8.0",
 	  "wpackagist-theme/twentynineteen": "^1.0",
-	  "wpackagist-theme/twentytwenty": "^1.0"
+	  "wpackagist-theme/twentytwenty": "^1.0",
+	  "wpackagist-theme/storefront": "2.5.1"
 	},
 	"config": {
 	  "vendor-dir": "vendor",
