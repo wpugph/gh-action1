@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd $PROJECT_ROOT
+rm $PROJECT_ROOT/composer.lock
 composer install
 echo 'wp composer build success!!'
 
