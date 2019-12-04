@@ -23,7 +23,6 @@ $PROJECT_ROOT/node_modules/backstopjs/cli/index.js test --config=$PROJECT_ROOT/s
 /home/runner/terminus/vendor/bin/terminus auth:whoami
 
 /home/runner/terminus/vendor/bin/terminus connection:set $PANTHEONSITENAME.$QA_PANTHEONENV sftp
-
 rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./backstop_data/. --temp-dir=~/tmp/ $QA_PANTHEONENV.$PANTHEONSITEUUID@appserver.$QA_PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/web/backstop_data/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
 
 echo 'View backstop report here\n'
