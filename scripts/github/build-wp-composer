@@ -5,7 +5,7 @@ composer install
 echo 'wp composer build success!!'
 
 # deploy pantheon yml files
-rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./pantheon.yml --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/pantheon.yml --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
+rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./pantheon.yml --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
 
 # deploy vendor folder
 rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./vendor/. --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/vendor/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
@@ -15,6 +15,8 @@ rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./web/private/. --tem
 
 # deploy plugins and themes
 rsync -rLvz --size-only --ipv4 --progress -e 'ssh -p 2222' ./web/wp-content/. --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/web/wp-content/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
+
+ls $PROJECT_ROOT -al
 
 rm $PROJECT_ROOT/web/wp/wp-config.php
 
