@@ -40,11 +40,6 @@ module.exports = {
             name: 'tablet',
             width: 1024,
             height: 768
-        },
-        {
-            "name": "desktop",
-            "width": 1920,
-            "height": 1080
         }
     ],
     scenarios: scenariosToTest,

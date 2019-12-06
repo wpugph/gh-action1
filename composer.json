@@ -28,7 +28,7 @@
 	  "wpackagist-theme/twentytwenty": "^1.0",
 	  "pantheon-systems/wordpress-composer": "5.1",
 	  "wpackagist-plugin/woocommerce": "3.8.0",
-	  "wpackagist-theme/storefront": "2.5.2"
+	  "wpackagist-theme/storefront": "2.5.0"
 	},
 	"config": {
 	  "vendor-dir": "vendor",
