@@ -25,18 +25,25 @@ You'll need an account in Pantheon and in GitHub to test this build
 1) Clone this repo
 2) Modify .github/workflows/composer-build.yml to reflect your 
 
-REFERENCE_SITE_URL
-QA_PANTHEONENV
-PANTHEONENV
-PANTHEONSITENAME
+`REFERENCE_SITE_URL`
+
+`QA_PANTHEONENV`
+
+`PANTHEONENV`
+
+`PANTHEONSITENAME`
 
 3) Further modify scripts/github/test/backstopjs/backstopConfig.js for additional settings
 
 4) Add these as secret tokens in GitHub
-PANTHEONEMAIL - Your Pantheon registered email
-PANTHEONSITEUUID - Site UUID where your code will be deployed to
-STAGING_PRIVATE_KEY - https://pantheon.io/docs/ssh-keys
-MACHINETOKEN - https://pantheon.io/docs/machine-tokens#create-a-machine-token
+
+`PANTHEONEMAIL` - Your Pantheon registered email
+
+`PANTHEONSITEUUID` - Site UUID where your code will be deployed to
+
+`STAGING_PRIVATE_KEY` - https://pantheon.io/docs/ssh-keys
+
+`MACHINETOKEN` - https://pantheon.io/docs/machine-tokens#create-a-machine-token
 
 ## Why we use composer in WP?
 - Easier plugin, theme and core version management from composer.json file
