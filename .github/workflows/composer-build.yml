@@ -11,25 +11,28 @@ jobs:
     - uses: actions/checkout@v1
     - name: Setup SSH access to Pantheon
       run: |
-        # define settings here
-        export PANTHEONEMAIL="cralberto11@gmail.com"
+        # define BACKSTOPJS settings here
         export REFERENCE_SITE_URL='https://live-gh-action1.pantheonsite.io/'
-        export PANTHEONSITENAME="gh-action1"
-        export PANTHEONSITEUUID="a22f4a40-0025-4878-ae51-babe2e978c49"
-        export PANTHEONENV="dev"
-        export TEST_SITE_URL='https://dev-gh-action1.pantheonsite.io/'
         export QA_PANTHEONENV="qa1"
-        export QA_SITE_URL='https://qa1-gh-action1.pantheonsite.io/' 
         # add machine token & sshkey in secret variables
         # further configure scripts/github/test/backstopjs/backstopConfig.js
 
-        # environment ariables
+        # define Pantheon variables here
+        # development environment where build will be sent to 
+        export PANTHEONENV="dev2"
+        export PANTHEONSITENAME="gh-action1"
+
+        # load hidden variables
+        export PANTHEONSITEUUID="${{ secrets.PANTHEONSITEUUID }}"
+        export PANTHEONEMAIL="${{ secrets.PANTHEONEMAIL }}"
+        export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
+        export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
+        
+        # setup SSH access
         export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
         export PROJECT_ROOT="$(pwd)"
         export GITHUB_BRANCH=${GITHUB_REF##*heads/}
         export MACHINETOKEN="${{ secrets.MACHINETOKEN }}"
-        
-        # setup SSH access
         printf "[\e[0;34mNOTICE\e[0m] Setting up SSH access to server for rsync usage.\n"
         SSH_DIR="$HOME/.ssh"
         mkdir -p "$SSH_DIR"
@@ -46,12 +49,12 @@ jobs:
         echo "SSH PRIVATE KEY IMPORTED!!!"
 
         sh $PROJECT_ROOT/scripts/github/setup-terminus
+        
+        # composer build and deploy backstopjs to QA site
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
-        #https://admin.dashboard.pantheon.io/sites/a22f4a40-0025-4878-ae51-babe2e978c49
-        #http://dev-gh-action1.pantheonsite.io/
-        # https://pantheon.io/docs/nested-docroot convert
-        # update with woocommerce
-        # pattern with https://github.com/pantheon-systems/example-wordpress-composer
-        # create tutorials, automating your WP builds in GitHub
-        # convert ph_tech to nested docroot
+        # setup backstop script
+        sh $PROJECT_ROOT/scripts/github/setup-backstop
+
+        printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
+
