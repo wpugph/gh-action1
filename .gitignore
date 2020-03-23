@@ -8,6 +8,7 @@
 
 # Webroot #
 ###########
+web/wp-content/uploads
 !web/
 web/*
 !web/index.php
