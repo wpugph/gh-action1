@@ -20,14 +20,13 @@ jobs:
     - name: Pantheon Build
       id: cache-vendor
       run: |
-        # define BACKSTOPJS settings here
+        # Define BACKSTOPJS reference urls here
         export REFERENCE_SITE_URL='https://live-gh-action1.pantheonsite.io/'
         export QA_PANTHEONENV="qa1"
         # add machine token & sshkey in secret variables
         # further configure scripts/github/test/backstopjs/backstopConfig.js
 
-        # define Pantheon variables here
-        # development environment where build will be sent to 
+        # Define Pantheon variables where build will be sent to 
         export PANTHEONENV="dev2"
         export PANTHEONSITENAME="gh-action1"
 
@@ -67,7 +66,7 @@ jobs:
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
 
-    - name: No Cache TEST
+    - name: No Cache TESTß
       if: steps.cache-vendor.outputs.cache-hit != 'true'
       run: echo 'No cache here'
 
