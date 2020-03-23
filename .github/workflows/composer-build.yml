@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
 
     - name: Cache
       id: cache
@@ -17,7 +18,6 @@ jobs:
         key: ${{ runner.os }}-cache
 
     - name: Pantheon Build
-      uses: actions/checkout@v2
       id: cache-vendor
       run: |
         # define BACKSTOPJS settings here
