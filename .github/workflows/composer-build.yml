@@ -17,6 +17,7 @@ jobs:
         key: ${{ runner.os }}-cache
 
     - name: Pantheon Build
+      uses: actions/checkout@v2
       id: cache-vendor
       run: |
         # define BACKSTOPJS settings here
