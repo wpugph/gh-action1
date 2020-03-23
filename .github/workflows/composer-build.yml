@@ -9,7 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Setup SSH access to Pantheon
+    - name: Pantheon Build
+      id: cache-vendor
+      uses: actions/cache@v1
       run: |
         # define BACKSTOPJS settings here
         export REFERENCE_SITE_URL='https://live-gh-action1.pantheonsite.io/'
@@ -58,3 +60,6 @@ jobs:
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
 
+    - name: Cache test
+      if: steps.cache-vendor.outputs.cache-hit != 'true'
+      run: echo $REFERENCE_SITE_URL
