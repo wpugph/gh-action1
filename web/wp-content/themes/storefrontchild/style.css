@@ -11,3 +11,7 @@
  Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
  Text Domain:  storefrontchild
 */
+
+.main-navigation ul.nav-menu > li > a {
+    font-size: 17px !important;
+}
