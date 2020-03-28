@@ -42,25 +42,7 @@ jobs:
         export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
         export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
         
-        # setup SSH access
-        export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
-        export PROJECT_ROOT="$(pwd)"
-        export GITHUB_BRANCH=${GITHUB_REF##*heads/}
-        export MACHINETOKEN="${{ secrets.MACHINETOKEN }}"
-        printf "[\e[0;34mNOTICE\e[0m] Setting up SSH access to server for rsync usage.\n"
-        SSH_DIR="$HOME/.ssh"
-        mkdir -p "$SSH_DIR"
-        chmod 700 "$SSH_DIR"
-        touch "$SSH_DIR/id_rsa1"
-        touch "$SSH_DIR/config"
-        echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
-        echo "${{ secrets.STAGING_PRIVATE_KEY }}" > "$SSH_DIR/id_rsa1"
-        chmod 600 "$SSH_DIR/id_rsa1"
-        chmod 600 "$SSH_DIR/config"
-        eval "$(ssh-agent -s)"
-        ssh-add "$SSH_DIR/id_rsa1"
-        ssh-add -l
-        echo "SSH PRIVATE KEY IMPORTED!!!"
+        sh $PROJECT_ROOT/scripts/github/load-keys
 
         sh $PROJECT_ROOT/scripts/github/setup-terminus
         
