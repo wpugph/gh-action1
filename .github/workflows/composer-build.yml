@@ -14,7 +14,6 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: vendor
-        run: ls
 
     - name: Cache
       id: cache
