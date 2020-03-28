@@ -44,6 +44,8 @@ jobs:
         # composer build and deploy backstopjs to QA site
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
+        sh $PROJECT_ROOT/scripts/github/setup-backstop
+
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
 
     - name: Cache test

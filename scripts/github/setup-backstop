@@ -2,6 +2,8 @@
 
 export PROJECT_ROOT="$(pwd)"
 . $PROJECT_ROOT/config
+echo "project Root:"$PROJECT_ROOT
+cat $PROJECT_ROOT/config
 
 export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
 export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
@@ -9,7 +11,7 @@ export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
 cd $PROJECT_ROOT
 printf "[\e[0;34mNOTICE\e[0m] Installing BackstopJS\n"
 
-install backstop
+# install backstop
 npm install backstopjs || exit 0
 $PROJECT_ROOT/node_modules/backstopjs/cli/index.js -v
 # Backstop get reference

@@ -60,4 +60,4 @@ rsync -rLvzc --size-only --ipv4 --progress -e 'ssh -p 2222' ./web/wp/. --temp-di
 printf "[\e[0;34mNOTICE\e[0m] Deployed core and wp-config\n"
 
 # setup backstop script
-sh $PROJECT_ROOT/scripts/github/setup-backstop
+# sh $PROJECT_ROOT/scripts/github/setup-backstop
