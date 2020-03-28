@@ -11,4 +11,4 @@ curl -O https://raw.githubusercontent.com/pantheon-systems/terminus-installer/ma
 /home/runner/terminus/vendor/bin/terminus auth:whoami
 /home/runner/terminus/vendor/bin/terminus connection:set $PANTHEONSITENAME.$PANTHEONENV sftp
 
-terminus art
+/home/runner/terminus/vendor/bin/terminus art
