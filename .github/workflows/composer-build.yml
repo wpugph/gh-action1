@@ -75,9 +75,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: backstop-data
-        path: |
-          vendor
-          web
+        path: vendor
 
     # - name: Upload custom code
     #   uses: actions/upload-artifact@v1
@@ -115,8 +113,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: backstop-data
-        path: |
-          web
+        path: web
 
   deploy-live:
     runs-on: ubuntu-latest
