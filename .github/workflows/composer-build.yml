@@ -55,6 +55,12 @@ jobs:
         . $PROJECT_ROOT/config  
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
+    - name: Install SSH key and composer
+      run: |
+        export PROJECT_ROOT="$(pwd)"
+        . $PROJECT_ROOT/config  
+        sh $PROJECT_ROOT/scripts/github/setup-backstop
+
     - name: Cache test
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
