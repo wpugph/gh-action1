@@ -12,7 +12,6 @@ jobs:
       MACHINETOKEN: "${{ secrets.MACHINETOKEN }}"
       STAGING_PRIVATE_KEY: "${{ secrets.STAGING_PRIVATE_KEY }}"
       PROJECT_ROOT: "$(pwd)"
-      . $PROJECT_ROOT/config
 
     steps:
     - uses: actions/checkout@v2
