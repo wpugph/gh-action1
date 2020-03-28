@@ -51,6 +51,8 @@ jobs:
 
     - name: Install SSH key and composer
       run: |
+        export PROJECT_ROOT="$(pwd)"
+        . $PROJECT_ROOT/config  
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
     - name: Cache test
