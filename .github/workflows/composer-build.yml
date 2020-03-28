@@ -77,3 +77,9 @@ jobs:
       run: |
         echo $REFERENCE_SITE_URL
         echo "cache$REFERENCE_SITE_URL//"
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v1
+      with:
+        name: vendor
+        path: vendor
