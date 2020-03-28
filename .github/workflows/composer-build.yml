@@ -26,7 +26,7 @@ jobs:
       if: steps.cache-vendor.outputs.cache-hit != 'true'
       run: |
         echo 'Cache found'
-        ls
+        ls web
 
     - name: Pantheon Build
       id: cache-vendor
@@ -42,7 +42,7 @@ jobs:
         sh $PROJECT_ROOT/scripts/github/setup-terminus
         
         # composer build and deploy backstopjs to QA site
-        # sh $PROJECT_ROOT/scripts/github/build-wp-composer
+        sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
 

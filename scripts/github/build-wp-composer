@@ -3,7 +3,7 @@
 export PROJECT_ROOT="$(pwd)"
 . $PROJECT_ROOT/config  
 
-sh $PROJECT_ROOT/scripts/github/build-wp-composer
+# sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
 cd $PROJECT_ROOT
 rm $PROJECT_ROOT/composer.lock
