@@ -54,6 +54,7 @@ jobs:
         export PROJECT_ROOT="$(pwd)"
         . $PROJECT_ROOT/config  
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
+        ls
 
     - name: Save composer build
       uses: actions/upload-artifact@v1
