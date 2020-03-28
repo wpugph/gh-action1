@@ -37,7 +37,7 @@ jobs:
         export PROJECT_ROOT="$(pwd)"
         . $PROJECT_ROOT/config
         sh $PROJECT_ROOT/scripts/github/load-keys
-        ssh-add -l
+        # ssh-add -l
         # if this is tru maybe we can use on each step
 
     - name: Pantheon Build
