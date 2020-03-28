@@ -20,7 +20,8 @@ echo 'wp composer build success!!'
 
 ssh-add -l
 
-sh $PROJECT_ROOT/scripts/github/load-keys
+#sh $PROJECT_ROOT/scripts/github/load-keys
+
 export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
 echo "COMPOSER PATH:"$PATH
 export PROJECT_ROOT="$(pwd)"
