@@ -22,8 +22,11 @@ jobs:
       with:
         path: vendor
         key: ${{ runner.os }}-cache
+      run: |
+        echo 'Cache found'
+        ls web
 
-    - name: Cache found
+    - name: Cache-vendor found
       if: steps.cache-vendor.outputs.cache-hit != 'true'
       run: |
         echo 'Cache found'
@@ -31,6 +34,10 @@ jobs:
 
     - name: Pantheon Build
       id: cache-vendor
+      with:
+        name: vendor-dep
+        path: |
+          vendor
       run: |
         
         export PROJECT_ROOT="$(pwd)"
