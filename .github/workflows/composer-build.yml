@@ -10,17 +10,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Download artifacts
-        uses: actions/download-artifact@v1
-        with:
-          name: vendor
-
     - name: Cache
       id: cache
       uses: actions/cache@v1
       with:
         path: vendor
         key: ${{ runner.os }}-cache
+
+    - name: Cache found
+      if: steps.cache-vendor.outputs.cache-hit != 'true'
+      run: |
+        echo 'Cache found'
+        ls
 
     - name: Pantheon Build
       id: cache-vendor
@@ -70,12 +71,6 @@ jobs:
         sh $PROJECT_ROOT/scripts/github/setup-backstop
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
-
-    - name: No Cache TESTß
-      if: steps.cache-vendor.outputs.cache-hit != 'true'
-      run: |
-        echo 'No cache here'
-        ls
 
     - name: Cache test
       if: steps.cache.outputs.cache-hit != 'true'
