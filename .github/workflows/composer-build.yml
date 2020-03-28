@@ -85,3 +85,8 @@ jobs:
         path: |
           vendor
           node_modules
+  test:
+   runs-on: ubuntu-latest
+
+   run: |
+        echo 'Games'
