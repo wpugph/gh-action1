@@ -48,7 +48,7 @@ jobs:
         sh $PROJECT_ROOT/scripts/github/setup-terminus
         
         # composer build and deploy backstopjs to QA site
-        sh $PROJECT_ROOT/scripts/github/build-wp-composer
+        # sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
         # setup backstop script
         sh $PROJECT_ROOT/scripts/github/setup-backstop
