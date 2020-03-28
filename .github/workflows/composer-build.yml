@@ -28,6 +28,10 @@ jobs:
       run: |
         echo 'Cache found'
         ls web
+        echo 'root folder'
+        ls
+        ssh-add -l
+        # if this is tru maybe we can use on each step
 
     - name: Pantheon Build
       id: cache-vendor
@@ -64,12 +68,6 @@ jobs:
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
         ls
 
-    - name: Backstop setup
-      run: |
-        export PROJECT_ROOT="$(pwd)"
-        . $PROJECT_ROOT/config
-        sh $PROJECT_ROOT/scripts/github/setup-backstop
-
     # - name: Save backstop data
     #   uses: actions/upload-artifact@v1
     #   with:
@@ -83,13 +81,14 @@ jobs:
         echo $REFERENCE_SITE_URL
         echo "cache$REFERENCE_SITE_URL//"
         ls
+        # build fails no cache or artifact
 
-    - name: Upload custom code
-      uses: actions/upload-artifact@v1
-      with:
-        name: custom-code
-        path: |
-          web/backstop_data
+    # - name: Upload custom code
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: custom-code
+    #     path: |
+    #       web/backstop_data
   
   backstop-test:
     runs-on: ubuntu-latest
@@ -103,11 +102,14 @@ jobs:
         path: vendor
         key: ${{ runner.os }}-cache
     
-    - name: Cache found
+    - name: Cache found - Running Backstop
       if: steps.cache-vendor.outputs.cache-hit != 'true'
       run: |
         echo 'Cache found'
         ls
+        export PROJECT_ROOT="$(pwd)"
+        . $PROJECT_ROOT/config
+        sh $PROJECT_ROOT/scripts/github/setup-backstop
 
   deploy-live:
     runs-on: ubuntu-latest
