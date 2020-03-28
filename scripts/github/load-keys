@@ -22,4 +22,5 @@ eval "$(ssh-agent -s)"
 ssh-add "$SSH_DIR/id_rsa1"
 ssh-add -l
 cat $SSH_DIR/id_rsa1
+cat $SSH_DIR/config
 echo "SSH PRIVATE KEY IMPORTED!!!"

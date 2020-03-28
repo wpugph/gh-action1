@@ -10,7 +10,7 @@ echo "SSHDIR PATH:"$SSH_DIR
 
 sh $PROJECT_ROOT/scripts/github/load-keys
 
-sh $PROJECT_ROOT
+
 echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
 cat $SSH_DIR/config
 
