@@ -6,6 +6,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      PANTHEONSITEUUID: "${{ secrets.PANTHEONSITEUUID }}"
+      PANTHEONEMAIL: "${{ secrets.PANTHEONEMAIL }}"
+      MACHINETOKEN: "${{ secrets.MACHINETOKEN }}"
 
     steps:
     - uses: actions/checkout@v2
@@ -33,15 +37,13 @@ jobs:
         sh $PROJECT_ROOT/scripts/github/load-variables
 
         # load hidden variables
-        export PANTHEONSITEUUID="${{ secrets.PANTHEONSITEUUID }}"
-        export PANTHEONEMAIL="${{ secrets.PANTHEONEMAIL }}"
+        
         export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
         export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
 
 
         sh $PROJECT_ROOT/scripts/github/load-keys
 
-        export MACHINETOKEN="${{ secrets.MACHINETOKEN }}"
         sh $PROJECT_ROOT/scripts/github/setup-terminus
         
         # composer build and deploy backstopjs to QA site
