@@ -67,7 +67,7 @@ jobs:
         path: |
           web/wp-content/themes/storefrontchild
   
-  backstop test:
+  backstop-test:
     runs-on: ubuntu-latest
     steps:
     - name: Test build
@@ -83,7 +83,7 @@ jobs:
         echo 'Cache found'
         ls
 
-  deploy live:
+  deploy-live:
     runs-on: ubuntu-latest
     steps:
     - name: Test build
