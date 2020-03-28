@@ -26,6 +26,7 @@ jobs:
     - name: Pantheon Build
       id: cache-vendor
       run: |
+        export PROJECT_ROOT="$(pwd)"   
         
         sh $PROJECT_ROOT/scripts/github/load-variables
 
