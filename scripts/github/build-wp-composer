@@ -13,30 +13,32 @@ rm $PROJECT_ROOT/composer.lock
 composer install
 echo 'wp composer build success!!'
 
-# sh $PROJECT_ROOT/scripts/github/load-keys
-export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
-echo "COMPOSER PATH:"$PATH
-export PROJECT_ROOT="$(pwd)"
-export GITHUB_BRANCH=${GITHUB_REF##*heads/}
-printf "[\e[0;34mNOTICE\e[0m] Setting up SSH access to server for rsync usage.\n"
-SSH_DIR="$HOME/.ssh"
-echo "SSHDIR PATH:"$SSH_DIR
-
-mkdir -p "$SSH_DIR"
-chmod 700 "$SSH_DIR"
-touch "$SSH_DIR/id_rsa1"
-touch "$SSH_DIR/config"
-echo "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
-# echo "${{ secrets.STAGING_PRIVATE_KEY }}" > "$SSH_DIR/id_rsa1"
-echo "$STAGING_PRIVATE_KEY" > "$SSH_DIR/id_rsa1"
-chmod 600 "$SSH_DIR/id_rsa1"
-chmod 600 "$SSH_DIR/config"
-eval "$(ssh-agent -s)"
-ssh-add "$SSH_DIR/id_rsa1"
 ssh-add -l
-cat $SSH_DIR/id_rsa1
-cat $SSH_DIR/config
-echo "SSH PRIVATE KEY IMPORTED!!!"
+
+# sh $PROJECT_ROOT/scripts/github/load-keys
+# export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
+# echo "COMPOSER PATH:"$PATH
+# export PROJECT_ROOT="$(pwd)"
+# export GITHUB_BRANCH=${GITHUB_REF##*heads/}
+# printf "[\e[0;34mNOTICE\e[0m] Setting up SSH access to server for rsync usage.\n"
+# SSH_DIR="$HOME/.ssh"
+# echo "SSHDIR PATH:"$SSH_DIR
+
+# mkdir -p "$SSH_DIR"
+# chmod 700 "$SSH_DIR"
+# touch "$SSH_DIR/id_rsa1"
+# touch "$SSH_DIR/config"
+# echo "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
+# # echo "${{ secrets.STAGING_PRIVATE_KEY }}" > "$SSH_DIR/id_rsa1"
+# echo "$STAGING_PRIVATE_KEY" > "$SSH_DIR/id_rsa1"
+# chmod 600 "$SSH_DIR/id_rsa1"
+# chmod 600 "$SSH_DIR/config"
+# eval "$(ssh-agent -s)"
+# ssh-add "$SSH_DIR/id_rsa1"
+# ssh-add -l
+# cat $SSH_DIR/id_rsa1
+# cat $SSH_DIR/config
+# echo "SSH PRIVATE KEY IMPORTED!!!"
 
 # deploy pantheon yml files
 rsync -rLvzc --size-only --ipv4 --progress -e 'ssh -p 2222' ./pantheon.yml --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/

@@ -11,9 +11,19 @@ jobs:
       PANTHEONEMAIL: "${{ secrets.PANTHEONEMAIL }}"
       MACHINETOKEN: "${{ secrets.MACHINETOKEN }}"
       STAGING_PRIVATE_KEY: "${{ secrets.STAGING_PRIVATE_KEY }}"
+      PROJECT_ROOT: "$(pwd)"
+      . $PROJECT_ROOT/config
 
     steps:
     - uses: actions/checkout@v2
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.STAGING_PRIVATE_KEY }}
+        name: id_rsa # optional
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        config: Host *\n\tStrictHostKeyChecking no\n\n
 
     - name: Cache
       id: cache
