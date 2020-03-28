@@ -9,8 +9,8 @@ SSH_DIR="$HOME/.ssh"
 echo "SSHDIR PATH:"$SSH_DIR
 
 # sh $PROJECT_ROOT/scripts/github/load-keys
-echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
-cat $SSH_DIR/config
+# echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
+# cat $SSH_DIR/config
 ssh-add -l
 
 cd $PROJECT_ROOT
