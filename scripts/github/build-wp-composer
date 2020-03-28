@@ -9,12 +9,14 @@ SSH_DIR="$HOME/.ssh"
 echo "SSHDIR PATH:"$SSH_DIR
 
 # sh $PROJECT_ROOT/scripts/github/load-keys
-
-
 # echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
 # cat $SSH_DIR/config
-
 # ssh-add -l
+
+cd $PROJECT_ROOT
+rm $PROJECT_ROOT/composer.lock
+composer install
+echo 'wp composer build success!!'
 
 export PATH="$PATH:$COMPOSER_HOME/vendor/bin"
 echo "COMPOSER PATH:"$PATH
@@ -39,11 +41,6 @@ ssh-add -l
 cat $SSH_DIR/id_rsa1
 cat $SSH_DIR/config
 echo "SSH PRIVATE KEY IMPORTED!!!"
-
-cd $PROJECT_ROOT
-rm $PROJECT_ROOT/composer.lock
-composer install
-echo 'wp composer build success!!'
 
 # deploy pantheon yml files
 rsync -rLvzc --size-only --ipv4 --progress -e 'ssh -p 2222' ./pantheon.yml --temp-dir=~/tmp/ $PANTHEONENV.$PANTHEONSITEUUID@appserver.$PANTHEONENV.$PANTHEONSITEUUID.drush.in:code/ --exclude='*.git*' --exclude node_modules/ --exclude gulp/ --exclude source/
