@@ -16,17 +16,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Cache
+    - name: Setup Caches
       id: cache
       uses: actions/cache@v1
       with:
         path: |
           vendor
+          terminus
           web/wp
           web/wp-content
         key: ${{ runner.os }}-cache
+        key: cache
 
-    - name: Cache found
+    - name: Cache found load keys
       if: steps.cache-vendor.outputs.cache-hit != 'true'
       run: |
         echo 'Cache found'
@@ -40,7 +42,7 @@ jobs:
         # ssh-add -l
         # if this is tru maybe we can use on each step
 
-    - name: Pantheon Build
+    - name: Terminus Setup
       id: cache-vendor
       run: |
         
@@ -51,14 +53,7 @@ jobs:
 
         sh $PROJECT_ROOT/scripts/github/setup-terminus
 
-        # sh $PROJECT_ROOT/scripts/github/load-keys
-        
-        # composer build and deploy backstopjs to QA site
-        # sh $PROJECT_ROOT/scripts/github/build-wp-composer
-
-        # sh $PROJECT_ROOT/scripts/github/setup-backstop
-
-        printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
+        printf "[\e[0;34mNOTICE\e[0m] Terminus Setup COMPLETE!!!.\n"
         ls
 
     # - name: Save composer build
@@ -69,26 +64,20 @@ jobs:
     #       vendor
 
     - name: Install SSH key and composer
+      id: cache-composer
       run: |
         export PROJECT_ROOT="$(pwd)"
         . $PROJECT_ROOT/config  
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
         ls
 
-    # - name: Save backstop data
-    #   uses: actions/upload-artifact@v1
-    #   with:
-    #     name: backstop-data
-    #     path: |
-    #       vendor
-
-    - name: Cache test
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        echo $REFERENCE_SITE_URL
-        echo "cache$REFERENCE_SITE_URL//"
-        ls
-        # build fails no cache or artifact
+    - name: Save Vender folder
+      uses: actions/upload-artifact@v1
+      with:
+        name: backstop-data
+        path: |
+          vendor
+          web
 
     # - name: Upload custom code
     #   uses: actions/upload-artifact@v1
@@ -102,14 +91,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Test build
+    - name: Cache prime
       id: cache
       uses: actions/cache@v1
       with:
-        path: vendor
+        path: |
+          vendor
+          web
         key: ${{ runner.os }}-cache
     
     - name: Cache found - Running Backstop
+      id: cache-backstop
       if: steps.cache-vendor.outputs.cache-hit != 'true'
       run: |
         echo 'Cache found'
@@ -117,10 +109,19 @@ jobs:
         export PROJECT_ROOT="$(pwd)"
         . $PROJECT_ROOT/config
         sh $PROJECT_ROOT/scripts/github/setup-backstop
+        ls web
+  
+    - name: Save backstop data
+      uses: actions/upload-artifact@v1
+      with:
+        name: backstop-data
+        path: |
+          web
 
   deploy-live:
     runs-on: ubuntu-latest
     steps:
+    # deploy to test environment if pass
     - name: Test build
       id: cache
       uses: actions/cache@v1
