@@ -5,6 +5,12 @@ export PROJECT_ROOT="$(pwd)"
 
 # sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
+SSH_DIR="$HOME/.ssh"
+echo "SSHDIR PATH:"$SSH_DIR
+
+echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > "$SSH_DIR/config"
+ssh-add -l
+
 cd $PROJECT_ROOT
 rm $PROJECT_ROOT/composer.lock
 composer install
