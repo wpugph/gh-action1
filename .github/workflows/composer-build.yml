@@ -37,7 +37,7 @@ jobs:
 
         sh $PROJECT_ROOT/scripts/github/load-variables
 
-        # sh $PROJECT_ROOT/scripts/github/load-keys
+        sh $PROJECT_ROOT/scripts/github/load-keys
 
         sh $PROJECT_ROOT/scripts/github/setup-terminus
         
