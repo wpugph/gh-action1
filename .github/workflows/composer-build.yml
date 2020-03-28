@@ -30,13 +30,12 @@ jobs:
         ls web
 
     - name: Pantheon Build
-      id: cache-vendor
+      id: cache 
       with:
         name: vendor-dep
         path: |
           vendor
       run: |
-        
         export PROJECT_ROOT="$(pwd)"
         . $PROJECT_ROOT/config  
 
