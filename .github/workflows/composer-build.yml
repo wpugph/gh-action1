@@ -33,6 +33,9 @@ jobs:
         ls web
         echo 'root folder'
         ls
+        
+        export PROJECT_ROOT="$(pwd)"
+        . $PROJECT_ROOT/config
         sh $PROJECT_ROOT/scripts/github/load-keys
         ssh-add -l
         # if this is tru maybe we can use on each step
