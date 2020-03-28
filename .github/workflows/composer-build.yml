@@ -55,31 +55,39 @@ jobs:
         . $PROJECT_ROOT/config  
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
-    - name: Backstop setup
-      run: |
-        export PROJECT_ROOT="$(pwd)"
-        . $PROJECT_ROOT/config
-        sh $PROJECT_ROOT/scripts/github/setup-backstop
-
-    - name: Cache test
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: |
-        echo $REFERENCE_SITE_URL
-        echo "cache$REFERENCE_SITE_URL//"
-
-    - name: Cache dependencies
+    - name: Save composer build
       uses: actions/upload-artifact@v1
       with:
         name: vendor-dep
         path: |
           vendor
 
+    - name: Backstop setup
+      run: |
+        export PROJECT_ROOT="$(pwd)"
+        . $PROJECT_ROOT/config
+        sh $PROJECT_ROOT/scripts/github/setup-backstop
+
+    - name: Save backstop data
+      uses: actions/upload-artifact@v1
+      with:
+        name: backstop-data
+        path: |
+          vendor
+
+    - name: Cache test
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: |
+        echo $REFERENCE_SITE_URL
+        echo "cache$REFERENCE_SITE_URL//"
+        ls
+
     - name: Upload custom code
       uses: actions/upload-artifact@v1
       with:
         name: custom-code
         path: |
-          web/wp-content/themes/storefrontchild
+          web/backstop_data
   
   backstop-test:
     runs-on: ubuntu-latest
