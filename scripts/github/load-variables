@@ -11,10 +11,3 @@ export QA_PANTHEONENV="$REFERENCE_SITE_URL"
 # Define Pantheon variables where build will be sent to 
 export PANTHEONENV="$PANTHEONENV"
 export PANTHEONSITENAME="$PANTHEONSITENAME"
-
-# load hidden variables
-export PANTHEONSITEUUID="${{ secrets.PANTHEONSITEUUID }}"
-export PANTHEONEMAIL="${{ secrets.PANTHEONEMAIL }}"
-export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
-export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
-}}

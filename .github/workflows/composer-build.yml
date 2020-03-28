@@ -26,9 +26,17 @@ jobs:
     - name: Pantheon Build
       id: cache-vendor
       run: |
+        . $PROJECT_ROOT/config
         export PROJECT_ROOT="$(pwd)"   
-        
+
         sh $PROJECT_ROOT/scripts/github/load-variables
+
+        # load hidden variables
+        export PANTHEONSITEUUID="${{ secrets.PANTHEONSITEUUID }}"
+        export PANTHEONEMAIL="${{ secrets.PANTHEONEMAIL }}"
+        export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
+        export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
+
 
         sh $PROJECT_ROOT/scripts/github/load-keys
 
