@@ -45,11 +45,11 @@ jobs:
         # composer build and deploy backstopjs to QA site
         # sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
-        sh $PROJECT_ROOT/scripts/github/setup-backstop
+        # sh $PROJECT_ROOT/scripts/github/setup-backstop
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
 
-    - name: Install SSH key
+    - name: Install SSH key and composer
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.STAGING_PRIVATE_KEY }}
