@@ -55,9 +55,10 @@ jobs:
         . $PROJECT_ROOT/config  
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
-    - name: Install SSH key and composer
+    - name: Backstop setup
       run: |
-        cd $PROJECT_ROOT
+        export PROJECT_ROOT="$(pwd)"
+        . $PROJECT_ROOT/config  
         rm $PROJECT_ROOT/composer.lock
         composer install
         echo 'wp composer build success!!'
