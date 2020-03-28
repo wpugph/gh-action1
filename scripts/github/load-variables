@@ -4,7 +4,6 @@ export PROJECT_ROOT="$(pwd)"
 
 . $PROJECT_ROOT/config
 
-{{ export REFERENCE_SITE_URL='https://live-gh-action1.pantheonsite.io/'
 export QA_PANTHEONENV="$REFERENCE_SITE_URL"
 # add machine token & sshkey in secret variables
 # further configure scripts/github/test/backstopjs/backstopConfig.js
