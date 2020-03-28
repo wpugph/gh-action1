@@ -48,13 +48,14 @@ jobs:
         # sh $PROJECT_ROOT/scripts/github/setup-backstop
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
+        ls
 
-    - name: Save composer build
-      uses: actions/upload-artifact@v1
-      with:
-        name: vendor-dep
-        path: |
-          vendor
+    # - name: Save composer build
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: vendor-dep
+    #     path: |
+    #       vendor
 
     - name: Install SSH key and composer
       run: |
@@ -69,12 +70,12 @@ jobs:
         . $PROJECT_ROOT/config
         sh $PROJECT_ROOT/scripts/github/setup-backstop
 
-    - name: Save backstop data
-      uses: actions/upload-artifact@v1
-      with:
-        name: backstop-data
-        path: |
-          vendor
+    # - name: Save backstop data
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: backstop-data
+    #     path: |
+    #       vendor
 
     - name: Cache test
       if: steps.cache.outputs.cache-hit != 'true'
