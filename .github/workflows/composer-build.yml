@@ -94,3 +94,9 @@ jobs:
       with:
         path: vendor
         key: ${{ runner.os }}-cache
+    
+    - name: Cache found
+      if: steps.cache-vendor.outputs.cache-hit != 'true'
+      run: |
+        echo 'Cache found'
+        ls
