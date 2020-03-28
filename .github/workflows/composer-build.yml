@@ -61,13 +61,17 @@ jobs:
         echo $REFERENCE_SITE_URL
         echo "cache$REFERENCE_SITE_URL//"
 
-    - name: Upload artifacts
+    - name: Cache dependencies
       uses: actions/upload-artifact@v1
       with:
         name: vendor-dep
         path: |
           vendor
           web/wp
+
+    - name: Upload custom code
+      uses: actions/upload-artifact@v1
+      with:
         name: custom-code
         path: |
           web/wp-content/themes/storefrontchild
