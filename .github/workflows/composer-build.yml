@@ -17,14 +17,11 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Cache
-      id: cache
+      id: cache-vendor
       uses: actions/cache@v1
       with:
         path: vendor
         key: ${{ runner.os }}-cache
-      run: |
-        echo 'Cache found'
-        ls web
 
     - name: Cache-vendor found
       if: steps.cache-vendor.outputs.cache-hit != 'true'
