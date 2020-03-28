@@ -16,14 +16,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install SSH key
-      uses: shimataro/ssh-key-action@v2
-      with:
-        key: ${{ secrets.STAGING_PRIVATE_KEY }}
-        name: id_rsa # optional
-        known_hosts: ${{ secrets.KNOWN_HOSTS }}
-        config: Host *\n\tStrictHostKeyChecking no\n\n
-
     - name: Cache
       id: cache
       uses: actions/cache@v1
@@ -51,11 +43,21 @@ jobs:
         # sh $PROJECT_ROOT/scripts/github/load-keys
         
         # composer build and deploy backstopjs to QA site
-        sh $PROJECT_ROOT/scripts/github/build-wp-composer
+        # sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
         sh $PROJECT_ROOT/scripts/github/setup-backstop
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
+
+    - name: Install SSH key
+      uses: shimataro/ssh-key-action@v2
+      with:
+        key: ${{ secrets.STAGING_PRIVATE_KEY }}
+        name: id_rsa # optional
+        known_hosts: ${{ secrets.KNOWN_HOSTS }}
+        config: Host *\n\tStrictHostKeyChecking no\n\n
+      run: |
+        sh $PROJECT_ROOT/scripts/github/build-wp-composer
 
     - name: Cache test
       if: steps.cache.outputs.cache-hit != 'true'
