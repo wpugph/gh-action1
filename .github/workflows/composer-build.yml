@@ -49,19 +49,19 @@ jobs:
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
 
-    - name: Install SSH key and composer
-      run: |
-        export PROJECT_ROOT="$(pwd)"
-        . $PROJECT_ROOT/config  
-        sh $PROJECT_ROOT/scripts/github/build-wp-composer
-        ls
-
     - name: Save composer build
       uses: actions/upload-artifact@v1
       with:
         name: vendor-dep
         path: |
           vendor
+
+    - name: Install SSH key and composer
+      run: |
+        export PROJECT_ROOT="$(pwd)"
+        . $PROJECT_ROOT/config  
+        sh $PROJECT_ROOT/scripts/github/build-wp-composer
+        ls
 
     - name: Backstop setup
       run: |
