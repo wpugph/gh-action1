@@ -86,7 +86,11 @@ jobs:
           vendor
           node_modules
   test:
-   runs-on: ubuntu-latest
 
-   run: |
-        echo 'Games'
+    steps:
+    - name: Test build
+      id: cache
+      uses: actions/cache@v1
+      with:
+        path: vendor
+        key: ${{ runner.os }}-cache
