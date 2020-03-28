@@ -26,22 +26,9 @@ jobs:
     - name: Pantheon Build
       id: cache-vendor
       run: |
-        # Define BACKSTOPJS reference urls here
-        export REFERENCE_SITE_URL='https://live-gh-action1.pantheonsite.io/'
-        export QA_PANTHEONENV="qa1"
-        # add machine token & sshkey in secret variables
-        # further configure scripts/github/test/backstopjs/backstopConfig.js
-
-        # Define Pantheon variables where build will be sent to 
-        export PANTHEONENV="dev2"
-        export PANTHEONSITENAME="gh-action1"
-
-        # load hidden variables
-        export PANTHEONSITEUUID="${{ secrets.PANTHEONSITEUUID }}"
-        export PANTHEONEMAIL="${{ secrets.PANTHEONEMAIL }}"
-        export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
-        export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
         
+        sh $PROJECT_ROOT/scripts/github/load-variables
+
         sh $PROJECT_ROOT/scripts/github/load-keys
 
         sh $PROJECT_ROOT/scripts/github/setup-terminus
