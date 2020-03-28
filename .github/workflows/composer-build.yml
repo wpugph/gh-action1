@@ -86,7 +86,7 @@ jobs:
           vendor
           node_modules
   test:
-
+    runs-on: ubuntu-latest
     steps:
     - name: Test build
       id: cache
