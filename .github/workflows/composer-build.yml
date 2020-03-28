@@ -64,10 +64,14 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: vendor
+        name: vendor-dep
         path: |
           vendor
-          node_modules
+          web/wp
+        name: custom-code
+        path: |
+          web/wp-content/themes/storefrontchild
+  
   test:
     runs-on: ubuntu-latest
     steps:

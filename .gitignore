@@ -26,7 +26,6 @@ web/wp-content/plugins/*
 !web/wp-content/plugins/.gitkeep
 !web/wp-content/themes
 web/wp-content/themes/*
-!web/wp-content/themes/storefrontchild/
 !web/wp-content/themes/.gitkeep
 !web/wp-content/config/
 web/wp
@@ -37,6 +36,9 @@ web/private/scripts/quicksilver
 !web/private/config/
 !.circleci
 .bashrc
+
+# custom theme and plugin should also be included here
+!web/wp-content/themes/storefrontchild/
 
 # Add directories containing build assets below.
 # Keep all additions above the "cut" line.
