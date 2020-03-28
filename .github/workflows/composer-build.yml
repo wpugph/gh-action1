@@ -10,6 +10,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Download artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: vendor
+        run: ls
+
     - name: Cache
       id: cache
       uses: actions/cache@v1
@@ -82,4 +88,6 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: vendor
-        path: vendor
+        path: |
+          vendor
+          node_modules
