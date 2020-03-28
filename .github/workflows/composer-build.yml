@@ -39,7 +39,7 @@ jobs:
 
         sh $PROJECT_ROOT/scripts/github/setup-terminus
 
-        sh $PROJECT_ROOT/scripts/github/load-keys
+        # sh $PROJECT_ROOT/scripts/github/load-keys
         
         # composer build and deploy backstopjs to QA site
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
@@ -58,7 +58,6 @@ jobs:
         name: vendor-dep
         path: |
           vendor
-          # web/wp
 
     - name: Upload custom code
       uses: actions/upload-artifact@v1
