@@ -37,21 +37,12 @@ jobs:
 
         sh $PROJECT_ROOT/scripts/github/load-variables
 
-        # load hidden variables
-        
-        export QA_SITE_URL="https://$QA_PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
-        export TEST_SITE_URL="https://$PANTHEONENV-$PANTHEONSITENAME.pantheonsite.io/"
-
-
         sh $PROJECT_ROOT/scripts/github/load-keys
 
         sh $PROJECT_ROOT/scripts/github/setup-terminus
         
         # composer build and deploy backstopjs to QA site
         # sh $PROJECT_ROOT/scripts/github/build-wp-composer
-
-        # setup backstop script
-        sh $PROJECT_ROOT/scripts/github/setup-backstop
 
         printf "[\e[0;34mNOTICE\e[0m] Build COMPLETE!!!.\n"
 
