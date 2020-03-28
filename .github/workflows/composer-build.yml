@@ -41,6 +41,7 @@ jobs:
 
         sh $PROJECT_ROOT/scripts/github/load-keys
 
+        export MACHINETOKEN="${{ secrets.MACHINETOKEN }}"
         sh $PROJECT_ROOT/scripts/github/setup-terminus
         
         # composer build and deploy backstopjs to QA site
