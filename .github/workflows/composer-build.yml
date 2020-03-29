@@ -126,13 +126,14 @@ jobs:
         export PROJECT_ROOT="$(pwd)"
         . $PROJECT_ROOT/config
         sh $PROJECT_ROOT/scripts/github/setup-backstop
-        ls web
+        echo 'not uploading'ß
+        ls 
   
     - name: Save backstop data
       uses: actions/upload-artifact@v1
       with:
         name: backstop-data
-        path: web
+        path: backstop_data
 
   deploy-live:
     runs-on: ubuntu-latest
