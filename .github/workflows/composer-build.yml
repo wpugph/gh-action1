@@ -70,12 +70,31 @@ jobs:
         . $PROJECT_ROOT/config  
         sh $PROJECT_ROOT/scripts/github/build-wp-composer
         ls
+    # individual path should be saved instead of piped
+    # vendor
+    # node_modules
+    # terminus
+    # wp compiled
+    # wp customized uncompiled
 
     - name: Save Vender folder
       uses: actions/upload-artifact@v1
       with:
-        name: backstop-data
+        name: vendor-data
         path: vendor
+
+    - name: Save WP compiled
+      uses: actions/upload-artifact@v1
+      with:
+        name: wp-compiled
+        path: web
+    
+    - name: Save WP custom
+      uses: actions/upload-artifact@v1
+      with:
+        name: wp-compiled
+        path: web/wp-content/themes
+
 
     # - name: Upload custom code
     #   uses: actions/upload-artifact@v1
