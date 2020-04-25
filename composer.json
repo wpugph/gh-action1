@@ -57,5 +57,10 @@
 	  "classmap": [
 		"scripts/composer/ScriptHandler.php"
 	  ]
+	},
+	"require-dev": {
+		"behat/mink-goutte-driver": "^1.2",
+		"dmore/behat-chrome-extension": "^1.3",
+		"paulgibbs/behat-wordpress-extension": "^3.3"
 	}
-  }
+}

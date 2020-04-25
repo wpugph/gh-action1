@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable
 /*
  * Don't show deprecations
  */
@@ -85,14 +85,14 @@ if ( ! isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ):
 	 *
 	 * @since 2.6.0
 	 */
-	define( 'AUTH_KEY', '^J/U[^{cOJxhcmmCq2MX%nUs}i_^7nm[w+VsetLZ[JXW9Un/IiyWVEXk;s}X=?u$' );
-	define( 'SECURE_AUTH_KEY', 'dT,wlW20L5V3ChmTEHFGVtUE-r&A)y+G%Pnql&eKdVAWvdIr9FO4lh_Gc9ZVn!1|' );
-	define( 'LOGGED_IN_KEY', '{0E{}k_e7!XRt*}h}nuMP[sKn$gb(O@|[>?bUs}B{>:|+|lL%czE/!Tlc Uk53#:' );
-	define( 'NONCE_KEY', '|M9$H1t9D@AR6>JM[]?9RoA^dmOCHt6ldAE%x|0 Iqpi+m32>1>?0*_?*#|6f7|W' );
-	define( 'AUTH_SALT', 'CA-BmAsS|o_P|!I8Wfu%a=qXC;!3p[8]W_:N2{oI]HhpLP(%2]zWLH+aHTHDw9>%' );
-	define( 'SECURE_AUTH_SALT', 'pi-EA,AOXk*U[VZ|t]R;@K<WMcbD)>k* ;8+hKX:A|$.Z@HL@0`SE?W0:-?-IRd!' );
-	define( 'LOGGED_IN_SALT', 'e+6%u)u@RZn-$}_Q[N;Na<|A-[Am_$#nhD~}ci:%R&B*oiq<sPF$v)d1r<-V-5W|' );
-	define( 'NONCE_SALT', 'r%oyx_`[A-~<LB)]I.,^//}/&]a)H|fzk3IUWrZn[L4qf#Pp#lsB-B}+/ai&u,/|' );
+	define( 'AUTH_KEY', '' );
+	define( 'SECURE_AUTH_KEY', '' );
+	define( 'LOGGED_IN_KEY', '' );
+	define( 'NONCE_KEY', '' );
+	define( 'AUTH_SALT', '' );
+	define( 'SECURE_AUTH_SALT', '' );
+	define( 'LOGGED_IN_SALT', '' );
+	define( 'NONCE_SALT', '' );
 
 endif;
 
@@ -132,15 +132,11 @@ if ( isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ):
 	 *
 	 * @since 2.6.0
 	 */
-	define( 'AUTH_KEY', $_ENV['AUTH_KEY'] );
-	define( 'SECURE_AUTH_KEY', $_ENV['SECURE_AUTH_KEY'] );
-	define( 'LOGGED_IN_KEY', $_ENV['LOGGED_IN_KEY'] );
-	define( 'NONCE_KEY', $_ENV['NONCE_KEY'] );
-	define( 'AUTH_SALT', $_ENV['AUTH_SALT'] );
-	define( 'SECURE_AUTH_SALT', $_ENV['SECURE_AUTH_SALT'] );
-	define( 'LOGGED_IN_SALT', $_ENV['LOGGED_IN_SALT'] );
-	define( 'NONCE_SALT', $_ENV['NONCE_SALT'] );
-	/**#@-*/
+	if ( file_exists( dirname( __FILE__ ) . '/wp-content/uploads/private/keys.php' ) && ! isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ) {
+		require_once dirname( __FILE__ ) . '/wp-content/uploads/private/keys.php';
+	}
+
+
 
 	/** A couple extra tweaks to help things run well on Pantheon. **/
 	if ( isset( $_SERVER['HTTP_HOST'] ) ) {
@@ -156,8 +152,7 @@ if ( isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ):
 		define( 'WP_SITEURL', $scheme . '://' . $_SERVER['HTTP_HOST'] . '/wp' );
 
 	}
-	// Don't show deprecations; useful under PHP 5.5
-	error_reporting( E_ALL ^ E_DEPRECATED );
+
 	// Force the use of a safe temp directory when in a container
 	if ( defined( 'PANTHEON_BINDING' ) ):
 		define( 'WP_TEMP_DIR', sprintf( '/srv/bindings/%s/tmp', PANTHEON_BINDING ) );
@@ -169,6 +164,9 @@ if ( isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ):
 	endif;
 
 endif;
+
+// echo WP_HOME;
+// echo $_SERVER['HTTP_HOST'];
 
 /*
 * Define wp-content directory outside of WordPress core directory
@@ -183,6 +181,75 @@ define( 'WP_CONTENT_URL', WP_HOME . '/wp-content' );
  * a unique prefix. Only numbers, letters, and underscores please!
  */
 $table_prefix = getenv( 'DB_PREFIX' ) !== false ? getenv( 'DB_PREFIX' ) : 'wp_';
+
+if ( file_exists( dirname( __FILE__ ) . '/wp-content/uploads/private/wp-config-redirect.php' ) && ! isset( $_ENV['PANTHEON_ENVIRONMENT'] ) ) {
+	require_once dirname( __FILE__ ) . '/wp-content/uploads/private/wp-config-redirect.php';
+}
+
+if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
+    define('FS_METHOD', 'direct');
+}
+
+
+
+define( 'WP_ALLOW_MULTISITE', true );
+define( 'MULTISITE', true );
+define( 'SUBDOMAIN_INSTALL', true );
+$base = '/';
+define( 'DOMAIN_CURRENT_SITE', $_SERVER['HTTP_HOST'] );
+define( 'PATH_CURRENT_SITE', '/' );
+define( 'SITE_ID_CURRENT_SITE', 1 );
+define( 'BLOG_ID_CURRENT_SITE', 1 );
+
+
+# echo $_SERVER['HTTP_HOST'];
+define('COOKIE_DOMAIN', $_SERVER['HTTP_HOST']);
+
+
+
+if ( ! empty( $_ENV['PANTHEON_ENVIRONMENT'] ) ) {
+	switch( $_ENV['PANTHEON_ENVIRONMENT'] ) {
+	  case 'live':
+	    define( 'SCRIPT_DEBUG', false );
+		// Value should be the primary domain for the Site Network.
+		// define( 'DOMAIN_CURRENT_SITE', 'live-' . $_ENV['PANTHEON_SITE_NAME'] .'.pantheonsite.io' );
+		// Once you map a domain to Live, you can change DOMAIN_CURRENT_SITE
+		// define( 'DOMAIN_CURRENT_SITE', 'example-network.com' );
+		ini_set('log_errors','Off');
+		ini_set('display_errors','Off');
+		ini_set('error_reporting', E_ALL );
+		define('WP_DEBUG', false);
+		define('WP_DEBUG_LOG', false);
+		define('WP_DEBUG_DISPLAY', false);
+		break;
+
+	  case 'test':
+	    define( 'SCRIPT_DEBUG', true );
+		// define( 'DOMAIN_CURRENT_SITE', 'test-' . $_ENV['PANTHEON_SITE_NAME'] .'.pantheonsite.io' );
+		break;
+	  case 'dev':
+		// var_dump( $_SERVER );
+		define( 'SCRIPT_DEBUG', true );
+		if (!defined( 'WP_DEBUG' )) {
+			define( 'WP_DEBUG', true );
+		  }
+		  define( 'WP_DEBUG_LOG', __DIR__ . '/wp-content/uploads/debug.log' ); // Moves the log file to a location writable while in git mode.
+		  define( 'WP_DEBUG_DISPLAY', true );
+		// define( 'DOMAIN_CURRENT_SITE', 'dev-' . $_ENV['PANTHEON_SITE_NAME'] .'.pantheonsite.io' );
+		break;
+	  default:
+		if (!defined( 'WP_DEBUG' )) {
+			define( 'WP_DEBUG', true );
+		}
+		define( 'WP_DEBUG_LOG', __DIR__ . '/wp-content/uploads/debug.log' ); // Moves the log file to a location writable while in git mode.
+		define( 'WP_DEBUG_DISPLAY', true );
+		# Catch-all to accommodate default naming for multi-dev environments.
+		define( 'SCRIPT_DEBUG', true );
+		// define( 'DOMAIN_CURRENT_SITE', $_ENV['PANTHEON_ENVIRONMENT'] . '-' . $_ENV['PANTHEON_SITE_NAME'] . '.pantheonsite.io' );
+		break;
+	  }
+  }
+
 
 /* That's all, stop editing! Happy blogging. */
 
