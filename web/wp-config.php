@@ -235,17 +235,20 @@ if ( ! empty( $_ENV['PANTHEON_ENVIRONMENT'] ) ) {
 		  }
 		  define( 'WP_DEBUG_LOG', __DIR__ . '/wp-content/uploads/debug.log' ); // Moves the log file to a location writable while in git mode.
 		  define( 'WP_DEBUG_DISPLAY', true );
-		// define( 'DOMAIN_CURRENT_SITE', 'dev-' . $_ENV['PANTHEON_SITE_NAME'] .'.pantheonsite.io' );
+		  ini_set( 'log_errors','On');
+          ini_set( 'display_errors','On');
+          ini_set( 'error_reporting', E_ALL );
+          define( 'WP_DISABLE_FATAL_ERROR_HANDLER', true );
 		break;
 	  default:
 		if (!defined( 'WP_DEBUG' )) {
 			define( 'WP_DEBUG', true );
 		}
-		define( 'WP_DEBUG_LOG', __DIR__ . '/wp-content/uploads/debug.log' ); // Moves the log file to a location writable while in git mode.
-		define( 'WP_DEBUG_DISPLAY', true );
-		# Catch-all to accommodate default naming for multi-dev environments.
-		define( 'SCRIPT_DEBUG', true );
-		// define( 'DOMAIN_CURRENT_SITE', $_ENV['PANTHEON_ENVIRONMENT'] . '-' . $_ENV['PANTHEON_SITE_NAME'] . '.pantheonsite.io' );
+		  define( 'WP_DEBUG_DISPLAY', true );
+		  ini_set( 'log_errors','On');
+		  ini_set( 'display_errors','On');
+		  ini_set( 'error_reporting', E_ALL );
+		  define( 'WP_DISABLE_FATAL_ERROR_HANDLER', true );
 		break;
 	  }
   }
